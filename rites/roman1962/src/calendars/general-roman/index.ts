@@ -134,7 +134,7 @@ export class GeneralRoman1962 extends CalendarDef {
       rank: Ranks.FourthClass,
       precedence: Precedences.Commemoration_14,
       dateDef: { month: 1, date: 5 },
-      commonsDef: [Common.Martyrs, Common.Popes],
+      commonsDef: [Common.Martyrs, Common.Pastors_Pope],
       colors: Colors.Red,
     },
 
@@ -198,7 +198,7 @@ export class GeneralRoman1962 extends CalendarDef {
       rank: Ranks.FourthClass,
       precedence: Precedences.Commemoration_14,
       dateDef: { month: 1, date: 11 },
-      commonsDef: [Common.Martyrs, Common.Popes],
+      commonsDef: [Common.Martyrs, Common.Pastors_Pope],
       colors: Colors.Red,
     },
 

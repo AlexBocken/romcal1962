@@ -23,8 +23,9 @@ export enum Common {
   Martyrs_Woman = 'Martyrs_Woman',
 
   // Pastors
-  Pastors_PopeOrBishop = 'Pastors_PopeOrBishop',
+  Pastors_Pope = 'Pastors_Pope',
   Pastors_Bishop = 'Pastors_Bishop',
+  Pastors_PopeOrBishop = 'Pastors_PopeOrBishop',
   Pastors_Several = 'Pastors_Several',
   Pastors_One = 'Pastors_One',
   Pastors_Founder_One = 'Pastors_Founder_One',
@@ -73,7 +74,7 @@ export enum CommonDefinition {
 
   // Pastors
   Pastors = 'Pastors',
-  Popes = 'PopeOrBishop',
+  Popes = 'Popes',
   Bishops = 'Bishops',
   Founders = 'Founders',
   Missionaries = 'Missionaries',
