@@ -5,7 +5,7 @@
 </h1>
 
 <p align="center">
-  Generates liturgical calendars of the Roman Rite of the Catholic Church.
+  Generates liturgical calendars of the 1962 Roman Rite of the Catholic Church.
 </p>
 
 <p align="center">
@@ -59,7 +59,7 @@
 
 ## Description
 
-Romcal generates liturgical calendars of the Roman Rite of the Roman Catholic Church.
+Romcal generates liturgical calendars of the 1962 Roman Rite of the Roman Catholic Church.
 Output conforms to the revised liturgical calendar as approved by Paul VI in [Mysterii Paschalis](http://w2.vatican.va/content/paul-vi/en/motu_proprio/documents/hf_p-vi_motu-proprio_19690214_mysterii-paschalis.html) dated 14 February 1969.
 The rules are defined in the [_General Instruction on the Roman Missal_](https://www.catholicculture.org/culture/library/view.cfm?recnum=337) (GIRM), the [_General Norms for the Liturgical Year and the Calendar_](https://www.catholicculture.org/culture/library/view.cfm?id=10842) (GNLY), and the [General Instructions of the Liturgy of the Hours](https://divineoffice.org/general-instructions/) (GILH).
 
