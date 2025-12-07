@@ -80,15 +80,10 @@ export class ProperOfTime extends CalendarDef {
   };
 
   /**
-   * Helper to create a new LiturgicalDayDef for the Proper of Time.
+   * Helper to add a new liturgical day input for the Proper of Time.
    */
-  #newLiturgicalDayDef(id: Id, input: LiturgicalDayProperOfTimeInput): LiturgicalDayDef {
-    return new LiturgicalDayDef(
-      id,
-      { properCycle: ProperCycles.ProperOfTime, ...input },
-      PROPER_OF_TIME_NAME,
-      this.#config
-    );
+  #newLiturgicalDayDef(id: Id, input: LiturgicalDayProperOfTimeInput): void {
+    this.inputs[id] = { properCycle: ProperCycles.ProperOfTime, ...input };
   }
 
   /**

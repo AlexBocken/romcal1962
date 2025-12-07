@@ -59,21 +59,21 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     });
 
     test('generates Ember Days in Advent', () => {
-      expect(definitions['ember_wednesday_advent']).toBeDefined();
-      expect(definitions['ember_friday_advent']).toBeDefined();
-      expect(definitions['ember_saturday_advent']).toBeDefined();
+      expect(definitions['advent_3_wednesday_ember']).toBeDefined();
+      expect(definitions['advent_3_friday_ember']).toBeDefined();
+      expect(definitions['advent_3_saturday_ember']).toBeDefined();
 
-      const emberWed = definitions['ember_wednesday_advent'];
+      const emberWed = definitions['advent_3_wednesday_ember'];
       expect(emberWed.periods).toContain(Period.EmberDays);
       expect(emberWed.precedence).toBe(Precedences.PrivilegedFeria_10);
     });
 
     test('generates privileged weekdays Dec 17-24', () => {
-      expect(definitions['dec_17']).toBeDefined();
-      expect(definitions['dec_18']).toBeDefined();
-      expect(definitions['dec_23']).toBeDefined();
+      expect(definitions['advent_december_17']).toBeDefined();
+      expect(definitions['advent_december_18']).toBeDefined();
+      expect(definitions['advent_december_23']).toBeDefined();
 
-      const dec17 = definitions['dec_17'];
+      const dec17 = definitions['advent_december_17'];
       expect(dec17.precedence).toBe(Precedences.PrivilegedFeria_10);
       expect(dec17.seasons).toContain(Season.Advent);
     });
