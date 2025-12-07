@@ -603,7 +603,7 @@ export class ProperOfTime extends CalendarDef {
     // In 1962, these are the Sundays between Easter Octave and Ascension.
     for (let week = 2; week <= 5; week += 1) {
       this.#newLiturgicalDayDef(`sunday_after_easter_${week}`, {
-        precedence: Precedences.SundayOfFirstOrSecondClass,
+        precedence: Precedences.PrivilegedSunday_2,
         dateDef: { dateFn: 'easterSunday', addDay: 7 * week, yearOffset },
         isHolyDayOfObligation: true,
         seasons: [Season.EasterTime],
@@ -748,7 +748,7 @@ export class ProperOfTime extends CalendarDef {
     });
 
     // Ember Days after Pentecost (Wed/Fri/Sat in the week after Pentecost).
-    const emberDaysPentecost = this.#dates.emberDaysPentecost(this.#year + yearOffset);
+    const emberDaysPentecost = this.dates.emberDaysPentecost(this.#config.year + yearOffset);
     if (emberDaysPentecost.length === 3) {
       const emberDayNames = ['wednesday', 'friday', 'saturday'];
       const emberDayDows = [3, 5, 6];
@@ -830,14 +830,14 @@ export class ProperOfTime extends CalendarDef {
 
     // Sundays after Pentecost (3rd through last).
     // The number varies from year to year (23-28 total Sundays after Pentecost).
-    const numberOfSundays = this.#dates.numberOfSundaysAfterPentecost(this.#year + yearOffset);
+    const numberOfSundays = this.dates.numberOfSundaysAfterPentecost(this.#config.year + yearOffset);
     for (let week = 3; week <= numberOfSundays; week += 1) {
-      const sunday = this.#dates.sundayAfterPentecost(week, this.#year + yearOffset);
+      const sunday = this.dates.sundayAfterPentecost(week, this.#config.year + yearOffset);
       if (sunday) {
         // Last Sunday after Pentecost has special significance.
         const isLastSunday = week === numberOfSundays;
         this.#newLiturgicalDayDef(`sunday_after_pentecost_${week}`, {
-          precedence: Precedences.SundayOfFirstOrSecondClass,
+          precedence: Precedences.UnprivilegedSunday_6,
           dateDef: { date: sunday },
           isHolyDayOfObligation: true,
           seasons: [Season.PentecostSeason],
@@ -851,7 +851,7 @@ export class ProperOfTime extends CalendarDef {
     }
 
     // September Ember Days (Wed/Fri/Sat after Sept 14, Exaltation of the Holy Cross).
-    const emberDaysSeptember = this.#dates.emberDaysSeptember(this.#year + yearOffset);
+    const emberDaysSeptember = this.dates.emberDaysSeptember(this.#config.year + yearOffset);
     if (emberDaysSeptember.length === 3) {
       const emberDayNames = ['wednesday', 'friday', 'saturday'];
       const emberDayDows = [3, 5, 6];
