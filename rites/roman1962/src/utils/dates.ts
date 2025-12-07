@@ -401,7 +401,7 @@ export class Dates {
    * @param year Gregorian year
    * @param epiphanyOnSunday Is Epiphany is fixed on a Sunday
    */
-  epiphany = (year = this.#year, epiphanyOnSunday = this.#config.epiphanyOnSunday): Date => {
+  epiphany = (year = this.#year, epiphanyOnSunday = this.#config.epiphanyOnSunday ?? false): Date => {
     const id = year + epiphanyOnSunday.toString();
     if (this.#epiphany[id]) return this.#epiphany[id];
 
@@ -1057,7 +1057,7 @@ export class Dates {
    * @param year Gregorian year
    * @param ascensionOnSunday Is Ascension is fixed on a Sunday
    */
-  ascension = (year = this.#year, ascensionOnSunday = this.#config.ascensionOnSunday): Date => {
+  ascension = (year = this.#year, ascensionOnSunday = this.#config.ascensionOnSunday ?? false): Date => {
     const id = year + ascensionOnSunday.toString();
     if (this.#ascension[id]) return this.#ascension[id];
     return (this.#ascension[id] = ascensionOnSunday
@@ -1105,7 +1105,7 @@ export class Dates {
    * @param year Gregorian year
    * @param corpusChristiOnSunday Is Corpus Christi is fixed on a Sunday
    */
-  corpusChristi = (year = this.#year, corpusChristiOnSunday = this.#config.corpusChristiOnSunday): Date => {
+  corpusChristi = (year = this.#year, corpusChristiOnSunday = this.#config.corpusChristiOnSunday ?? false): Date => {
     const id = year + corpusChristiOnSunday.toString();
     if (this.#corpusChristi[id]) return this.#corpusChristi[id];
     return (this.#corpusChristi[id] = corpusChristiOnSunday

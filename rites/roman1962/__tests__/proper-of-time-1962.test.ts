@@ -1,14 +1,15 @@
-import { RomcalConfig } from '../src/models/config';
-import { ProperOfTime } from '../src/proper-of-time/proper-of-time';
-import { Precedences } from '../src/constants/precedences';
-import { Season } from '../src/constants/seasons';
 import { Colors } from '../src/constants/colors';
 import { Period } from '../src/constants/periods';
+import { Precedences } from '../src/constants/precedences';
+import { Season } from '../src/constants/seasons';
+import { RomcalConfig } from '../src/models/config';
+import { ProperOfTime } from '../src/proper-of-time/proper-of-time';
+import { Inputs } from '../src/types/calendar-def';
 import { Dates } from '../src/utils/dates';
 
 describe('1962 Tridentine Calendar - ProperOfTime', () => {
   let properOfTime: ProperOfTime;
-  let definitions: any;
+  let definitions: Inputs;
 
   beforeAll(() => {
     // Create a mock config for testing
@@ -24,7 +25,7 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     };
 
     // Add dates after creating the config
-    mockConfig.dates = new Dates(mockConfig as RomcalConfig, 2025) as any;
+    mockConfig.dates = new Dates(mockConfig as RomcalConfig, 2025) as typeof Dates;
 
     properOfTime = new ProperOfTime(mockConfig as RomcalConfig);
 

@@ -575,12 +575,12 @@ dist/
 ### Phase 1: Foundation (MVP)
 
 - [x] Set up monorepo structure
-- [ ] Implement 1962 ranking and precedence system
-- [ ] Implement 1962 Proper of Time (temporal cycle)
-  - [ ] Septuagesima Time
-  - [ ] Lent and Passiontide
-  - [ ] Sundays after Pentecost
-  - [ ] Ember Days and Rogation Days
+- [x] Implement 1962 ranking and precedence system
+- [x] Implement 1962 Proper of Time (temporal cycle)
+  - [x] Septuagesima Time
+  - [x] Lent and Passiontide
+  - [x] Sundays after Pentecost
+  - [x] Ember Days and Rogation Days
 - [ ] Core General Roman Calendar 1962 (major feasts only)
 - [ ] Basic tests
 

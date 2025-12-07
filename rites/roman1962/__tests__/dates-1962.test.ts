@@ -1,5 +1,5 @@
-import { Dates, getUtcDate } from '../src/utils/dates';
 import { RomcalConfig } from '../src/models/config';
+import { Dates } from '../src/utils/dates';
 
 describe('1962 Tridentine Calendar - Date Calculations', () => {
   // Create a mock config for testing
