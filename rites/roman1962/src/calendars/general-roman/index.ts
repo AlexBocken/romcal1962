@@ -71,6 +71,146 @@ export class GeneralRoman1962 extends CalendarDef {
       isHolyDayOfObligation: true,
     },
 
+    // January 2 (or Sunday between Jan 1-6) - Most Holy Name of Jesus
+    // II Class
+    // Mass: In nómine Jesu
+    // Celebrated on Sunday between Jan 1-6, or Jan 2 if no Sunday falls in that range
+    // src: mr_1962 (German)
+    most_holy_name_of_jesus: {
+      rank: Ranks.SecondClass,
+      precedence: Precedences.GeneralSecondClassLordFeast_5,
+      dateDef: { dateFn: 'holyNameOfJesus1962' },
+      commonsDef: Common.None,
+      colors: Colors.White,
+    },
+
+    // January 2-4 - Ferial days of Christmas Octave
+    // IV Class
+    // Mass: Puer vom 1. Jan (Mass from Jan 1)
+    // Rubrics: Gl, o Cr, Präf v Weihn (Christmas Preface), gew Communicantes
+    // src: mr_1962 (German)
+    january_2_ferial: {
+      rank: Ranks.FourthClass,
+      precedence: Precedences.FerialDay_15,
+      dateDef: { month: 1, date: 2 },
+      properCycle: ProperCycles.ProperOfTime,
+      commonsDef: Common.None,
+      colors: Colors.White,
+    },
+
+    january_3_ferial: {
+      rank: Ranks.FourthClass,
+      precedence: Precedences.FerialDay_15,
+      dateDef: { month: 1, date: 3 },
+      properCycle: ProperCycles.ProperOfTime,
+      commonsDef: Common.None,
+      colors: Colors.White,
+    },
+
+    january_4_ferial: {
+      rank: Ranks.FourthClass,
+      precedence: Precedences.FerialDay_15,
+      dateDef: { month: 1, date: 4 },
+      properCycle: ProperCycles.ProperOfTime,
+      commonsDef: Common.None,
+      colors: Colors.White,
+    },
+
+    // January 5 - Ferial day with commemoration of St. Telesphorus, Pope, Martyr
+    // IV Class
+    // Mass: Puer vom 1. Jan, Gl, 2. Geb v Telesphorus, o Cr, Präf v Weihn
+    // Or: Messe Si díligis me v Telesphorus
+    // src: mr_1962 (German)
+    january_5_ferial: {
+      rank: Ranks.FourthClass,
+      precedence: Precedences.FerialDay_15,
+      dateDef: { month: 1, date: 5 },
+      properCycle: ProperCycles.ProperOfTime,
+      commonsDef: Common.None,
+      colors: Colors.White,
+    },
+
+    telesphorus_pope: {
+      rank: Ranks.FourthClass,
+      precedence: Precedences.Commemoration_14,
+      dateDef: { month: 1, date: 5 },
+      commonsDef: [Common.Martyrs, Common.Popes],
+      colors: Colors.Red,
+    },
+
+    // January 7-12 - Ferial days after Epiphany
+    // IV Class
+    // Mass: Ecce advénit (Jan 6) before Holy Family, or In excélso throno (1st Sunday after Epiphany) after Holy Family
+    // Rubrics: Gl, o Cr, Präf v Erscheinung (Epiphany Preface), gew Communicantes
+    // On Saturday: Gedächtnis der allerseligsten Jungfrau Maria (Commemoration of BVM)
+    // src: mr_1962 (German)
+    january_7_ferial: {
+      rank: Ranks.FourthClass,
+      precedence: Precedences.FerialDay_15,
+      dateDef: { month: 1, date: 7 },
+      properCycle: ProperCycles.ProperOfTime,
+      commonsDef: Common.None,
+      colors: Colors.White,
+    },
+
+    january_8_ferial: {
+      rank: Ranks.FourthClass,
+      precedence: Precedences.FerialDay_15,
+      dateDef: { month: 1, date: 8 },
+      properCycle: ProperCycles.ProperOfTime,
+      commonsDef: Common.None,
+      colors: Colors.White,
+    },
+
+    january_9_ferial: {
+      rank: Ranks.FourthClass,
+      precedence: Precedences.FerialDay_15,
+      dateDef: { month: 1, date: 9 },
+      properCycle: ProperCycles.ProperOfTime,
+      commonsDef: Common.None,
+      colors: Colors.White,
+    },
+
+    january_10_ferial: {
+      rank: Ranks.FourthClass,
+      precedence: Precedences.FerialDay_15,
+      dateDef: { month: 1, date: 10 },
+      properCycle: ProperCycles.ProperOfTime,
+      commonsDef: Common.None,
+      colors: Colors.White,
+    },
+
+    // January 11 - Ferial day with commemoration of St. Hyginus, Pope, Martyr
+    // IV Class
+    // Mass: Ecce advénit or In excélso throno, Gl, 2. Geb v Hyginus, o Cr, Präf v Erscheinung
+    // Or: Messe Si díligis me v Hyginus
+    // src: mr_1962 (German)
+    january_11_ferial: {
+      rank: Ranks.FourthClass,
+      precedence: Precedences.FerialDay_15,
+      dateDef: { month: 1, date: 11 },
+      properCycle: ProperCycles.ProperOfTime,
+      commonsDef: Common.None,
+      colors: Colors.White,
+    },
+
+    hyginus_pope: {
+      rank: Ranks.FourthClass,
+      precedence: Precedences.Commemoration_14,
+      dateDef: { month: 1, date: 11 },
+      commonsDef: [Common.Martyrs, Common.Popes],
+      colors: Colors.Red,
+    },
+
+    january_12_ferial: {
+      rank: Ranks.FourthClass,
+      precedence: Precedences.FerialDay_15,
+      dateDef: { month: 1, date: 12 },
+      properCycle: ProperCycles.ProperOfTime,
+      commonsDef: Common.None,
+      colors: Colors.White,
+    },
+
     // Holy Family: Jesus, Mary, and Joseph
     // II Class
     // Celebrated on the Sunday between Jan 7-12, OR on Jan 13 if it's a Sunday

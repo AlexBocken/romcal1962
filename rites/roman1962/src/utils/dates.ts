@@ -1188,6 +1188,30 @@ export class Dates {
   #holyFamily1962: Record<string, Date> = {};
 
   /**
+   * Get the date of the Most Holy Name of Jesus in the 1962 Tridentine calendar.
+   * Celebrated on Sunday between Jan 1-6, or Jan 2 if no Sunday falls in that range.
+   *
+   * @param year Gregorian year
+   */
+  holyNameOfJesus1962 = (year = this.#year): Date => {
+    const id = `holyNameOfJesus1962_${year}`;
+    if (id in this.#holyNameOfJesus1962) return this.#holyNameOfJesus1962[id];
+
+    // Check for Sunday between Jan 1-6
+    for (let day = 1; day <= 6; day++) {
+      const date = getUtcDate(year, 1, day);
+      if (date.getUTCDay() === 0) {
+        return (this.#holyNameOfJesus1962[id] = date);
+      }
+    }
+
+    // If no Sunday found, use Jan 2
+    return (this.#holyNameOfJesus1962[id] = getUtcDate(year, 1, 2));
+  };
+
+  #holyNameOfJesus1962: Record<string, Date> = {};
+
+  /**
    * Get the date of the Baptism of the Lord in the 1962 Tridentine calendar.
    * Celebrated on Jan 13 unless it's a Sunday (Holy Family takes precedence).
    *
