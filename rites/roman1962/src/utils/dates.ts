@@ -1169,6 +1169,43 @@ export class Dates {
   #holyFamily: Record<string, Date> = {};
 
   /**
+   * Get the date of the Holy Family feast in the 1962 Tridentine calendar.
+   * Celebrated on the Sunday after Epiphany (always between Jan 7-13).
+   *
+   * @param year Gregorian year
+   */
+  holyFamily1962 = (year = this.#year): Date => {
+    const id = `holyFamily1962_${year}`;
+    if (id in this.#holyFamily1962) return this.#holyFamily1962[id];
+
+    const epiphany = getUtcDate(year, 1, 6);
+    const epiphanyDayOfWeek = epiphany.getUTCDay();
+    const daysUntilNextSunday = epiphanyDayOfWeek === 0 ? 7 : 7 - epiphanyDayOfWeek;
+
+    return (this.#holyFamily1962[id] = addDays(epiphany, daysUntilNextSunday));
+  };
+
+  #holyFamily1962: Record<string, Date> = {};
+
+  /**
+   * Get the date of the Baptism of the Lord in the 1962 Tridentine calendar.
+   * Celebrated on Jan 13 unless it's a Sunday (Holy Family takes precedence).
+   *
+   * @param year Gregorian year
+   */
+  baptismOfTheLord1962 = (year = this.#year): Date | null => {
+    const id = `baptismOfTheLord1962_${year}`;
+    if (id in this.#baptismOfTheLord1962) return this.#baptismOfTheLord1962[id];
+
+    const jan13 = getUtcDate(year, 1, 13);
+    if (jan13.getUTCDay() === 0) return (this.#baptismOfTheLord1962[id] = null);
+
+    return (this.#baptismOfTheLord1962[id] = jan13);
+  };
+
+  #baptismOfTheLord1962: Record<string, Date | null> = {};
+
+  /**
    * Get the date of the Baptism of the Lord
    *
    * *The Baptism of the Lord (or the Baptism of Christ) is the feast day

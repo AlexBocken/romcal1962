@@ -71,16 +71,30 @@ export class GeneralRoman1962 extends CalendarDef {
       isHolyDayOfObligation: true,
     },
 
+    // Holy Family: Jesus, Mary, and Joseph
+    // II Class
+    // Celebrated on the Sunday between Jan 7-12, OR on Jan 13 if it's a Sunday
+    // Mass: Exsúltat
+    // Rubrics: Gl, ohne 2. Geb (without 2nd collect), Präf v Erscheinung, gew Communicantes
+    // src: mr_1962 (German)
+    holy_family: {
+      rank: Ranks.SecondClass,
+      precedence: Precedences.GeneralSecondClassLordFeast_5,
+      dateDef: { dateFn: 'holyFamily1962' },
+      commonsDef: Common.None,
+      colors: Colors.White,
+    },
+
     // January 13 - Commemoration of the Baptism of Our Lord Jesus Christ
-    // II Class (when not on Sunday)
+    // II Class (when NOT on Sunday)
     // Mass: Ecce advénit
     // Rubrics: Gl, o Cr, gew Communicantes
     // src: mr_1962 (German)
-    // Note: Falls on Sunday after Epiphany when that Sunday exists
+    // Note: If Jan 13 is a Sunday, Holy Family is celebrated instead
     baptism_of_the_lord: {
       rank: Ranks.SecondClass,
       precedence: Precedences.GeneralSecondClassLordFeast_5,
-      dateDef: { month: 1, date: 13 },
+      dateDef: { dateFn: 'baptismOfTheLord1962' },
       commonsDef: Common.None,
       colors: Colors.White,
     },
