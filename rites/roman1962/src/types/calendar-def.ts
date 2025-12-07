@@ -7,11 +7,10 @@ import { RomcalConfigInput } from './config';
 import { LiturgicalDayBundleInput, LiturgicalDayInput } from './liturgical-day';
 
 /**
- * Specific and proper configuration of a particular calendar
+ * Specific and proper configuration of a particular calendar.
+ * In 1962, Epiphany, Ascension, and Corpus Christi are always on their traditional days.
  */
-export type ParticularConfig = Partial<
-  Pick<RomcalConfig, 'ascensionOnSunday' | 'epiphanyOnSunday' | 'corpusChristiOnSunday' | 'easterCalculationType'>
->;
+export type ParticularConfig = Partial<Pick<RomcalConfig, 'easterCalculationType'>>;
 
 /**
  * General date definition collection

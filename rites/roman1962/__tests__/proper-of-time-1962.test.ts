@@ -12,12 +12,11 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
 
   beforeAll(() => {
     // Create a mock config for testing
+    // Note: In 1962, Epiphany (Jan 6), Ascension (Thursday), and Corpus Christi (Thursday)
+    // are always on their traditional days - no config needed
     const mockConfig: Partial<RomcalConfig> = {
       scope: 'liturgical',
       easterCalculationType: 'gregorian',
-      epiphanyOnSunday: false, // In 1962, Epiphany is always Jan 6
-      ascensionOnSunday: false, // In 1962, Ascension is always Thursday
-      corpusChristiOnSunday: false, // In 1962, Corpus Christi is always Thursday
       year: 2025,
       liturgicalDayDef: {},
       martyrologyCatalog: {}, // Empty martyrology for testing

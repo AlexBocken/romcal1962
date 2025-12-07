@@ -66,20 +66,9 @@ export class CalendarDef implements BaseCalendarDef {
       });
     }
 
-    // Combine the provided user configuration,
-    // the particular configuration from this calendar,
-    // and the sanitized configuration.
-
-    this.#config.epiphanyOnSunday =
-      input?.epiphanyOnSunday ?? this.particularConfig?.epiphanyOnSunday ?? this.#config.epiphanyOnSunday;
-
-    this.#config.ascensionOnSunday =
-      input?.ascensionOnSunday ?? this.particularConfig?.ascensionOnSunday ?? this.#config.ascensionOnSunday;
-
-    this.#config.corpusChristiOnSunday =
-      input?.corpusChristiOnSunday ??
-      this.particularConfig?.corpusChristiOnSunday ??
-      this.#config.corpusChristiOnSunday;
+    // In 1962, Epiphany (Jan 6), Ascension (Thursday), and Corpus Christi (Thursday)
+    // are always on their traditional days, never transferred to Sunday.
+    // No configuration needed - these are fixed in the 1962 calendar.
   }
 
   /**

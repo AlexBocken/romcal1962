@@ -3,11 +3,11 @@ import { RomcalConfig } from '../src/models/config';
 
 describe('1962 Tridentine Calendar - Date Calculations', () => {
   // Create a mock config for testing
+  // Note: In 1962, Epiphany (Jan 6) and Ascension (Thursday, 40 days after Easter)
+  // are always on their traditional days - no config needed
   const mockConfig: Partial<RomcalConfig> = {
     scope: 'liturgical',
     easterCalculationType: 'gregorian',
-    epiphanyOnSunday: false, // In 1962, Epiphany is always Jan 6
-    ascensionOnSunday: false, // In 1962, Ascension is always Thursday (40 days after Easter)
   };
 
   describe('Septuagesima Time', () => {
