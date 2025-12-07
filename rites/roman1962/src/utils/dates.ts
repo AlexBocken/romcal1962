@@ -1323,8 +1323,10 @@ export class Dates {
     if (week < 1 || week > 6) return (this.#sundayAfterEpiphany[id] = null);
     const maxSundays = this.numberOfSundaysAfterEpiphany(year);
     if (week > maxSundays) return (this.#sundayAfterEpiphany[id] = null);
-    const epiphanyOctaveDay = addDays(this.epiphany(year), 7);
-    return (this.#sundayAfterEpiphany[id] = addDays(epiphanyOctaveDay, 7 * week));
+    const epiphanyOctaveDay = addDays(this.epiphany(year), 7); // Jan 13
+    // Find the first Sunday after the Octave Day, then count weeks from there
+    const firstSunday = startOfWeek(addDays(epiphanyOctaveDay, 7 - epiphanyOctaveDay.getUTCDay()));
+    return (this.#sundayAfterEpiphany[id] = addDays(firstSunday, 7 * (week - 1)));
   };
 
   #sundayAfterEpiphany: Record<string, Date | null> = {};
