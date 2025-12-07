@@ -581,8 +581,8 @@ dist/
   - [x] Lent and Passiontide
   - [x] Sundays after Pentecost
   - [x] Ember Days and Rogation Days
-- [ ] Core General Roman Calendar 1962 (major feasts only)
-- [ ] Basic tests
+- [x] Core General Roman Calendar 1962 (major feasts only)
+- [x] Basic tests
 
 ### Phase 2: Enhanced Data
 
