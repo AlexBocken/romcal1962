@@ -16,7 +16,7 @@
   "devDependencies": {
     "@internal/config": "file:../../packages/config",
     "@types/jest": "^30.0.0",
-    "@types/node": "~24.10.1",
+    "@types/node": "~25.0.1",
     "esbuild": "~0.27.0",
     "esbuild-jest": "~0.5.0",
     "jest-extended": "^4.0.2"
