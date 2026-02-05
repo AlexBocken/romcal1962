@@ -1,4 +1,8 @@
-import { calculateGregorianEasterDate, calculateJulianEasterDateToGregorianDate } from '@internal/easter';
+import {
+  calculateGregorianEasterDate,
+  calculateJulianEasterDateToGregorianDate,
+  isLeapGregorianYear,
+} from '@internal/easter';
 
 import { Season } from '../constants/seasons';
 import { RomcalConfig } from '../models/config';
@@ -1367,21 +1371,23 @@ export class Dates {
     const septuagesima = this.septuagesimaSunday(year);
     const daysBetween = dateDifference(epiphanyOctaveDay, septuagesima);
     const sundayCount = Math.floor(daysBetween / 7);
-    return (this.#numberOfSundaysAfterEpiphany[year] = Math.min(6, Math.max(1, sundayCount)));
+    return (this.#numberOfSundaysAfterEpiphany[year] = Math.min(5, Math.max(1, sundayCount)));
   };
 
   #numberOfSundaysAfterEpiphany: Record<string, number> = {};
 
   /**
-   * Get the date of a specific Sunday after Epiphany (1-6).
+   * Get the date of a specific post-Octave Sunday after Epiphany (1-5).
+   * These correspond liturgically to the 2nd through 6th Sundays after Epiphany.
+   * (The 1st Sunday after Epiphany is the Holy Family, within the Octave.)
    * Returns null if that Sunday doesn't occur in the given year.
-   * @param week Sunday number (1-6)
+   * @param week Post-Octave Sunday number (1-5)
    * @param year Gregorian year
    */
   sundayAfterEpiphany = (week: number, year = this.#year): Date | null => {
     const id = `${year}_${week}`;
     if (this.#sundayAfterEpiphany[id] !== undefined) return this.#sundayAfterEpiphany[id];
-    if (week < 1 || week > 6) return (this.#sundayAfterEpiphany[id] = null);
+    if (week < 1 || week > 5) return (this.#sundayAfterEpiphany[id] = null);
     const maxSundays = this.numberOfSundaysAfterEpiphany(year);
     if (week > maxSundays) return (this.#sundayAfterEpiphany[id] = null);
     const epiphanyOctaveDay = addDays(this.epiphany(year), 7); // Jan 13
@@ -1535,6 +1541,42 @@ export class Dates {
   };
 
   #sundayAfterPentecost: Record<string, Date | null> = {};
+
+  /**
+   * FEBRUARY BISSEXTILE (LEAP YEAR) ADJUSTMENTS
+   *
+   * In the traditional Roman calendar, the extra day in a leap year (dies bissextilis)
+   * is inserted after February 23. This shifts all fixed feasts from February 24 onward
+   * by one day in leap years.
+   */
+
+  /**
+   * Get the date of St. Matthias, Apostle in the 1962 calendar.
+   * February 24 in normal years, February 25 in leap years.
+   * @param year Gregorian year
+   */
+  matthiasApostle1962 = (year = this.#year): Date => {
+    const id = `matthiasApostle1962_${year}`;
+    if (id in this.#matthiasApostle1962) return this.#matthiasApostle1962[id];
+    const date = isLeapGregorianYear(year) ? getUtcDate(year, 2, 25) : getUtcDate(year, 2, 24);
+    return (this.#matthiasApostle1962[id] = date);
+  };
+
+  #matthiasApostle1962: Record<string, Date> = {};
+
+  /**
+   * Get the date of St. Gabriel of Our Lady of Sorrows in the 1962 calendar.
+   * February 27 in normal years, February 28 in leap years.
+   * @param year Gregorian year
+   */
+  gabrielPossenti1962 = (year = this.#year): Date => {
+    const id = `gabrielPossenti1962_${year}`;
+    if (id in this.#gabrielPossenti1962) return this.#gabrielPossenti1962[id];
+    const date = isLeapGregorianYear(year) ? getUtcDate(year, 2, 28) : getUtcDate(year, 2, 27);
+    return (this.#gabrielPossenti1962[id] = date);
+  };
+
+  #gabrielPossenti1962: Record<string, Date> = {};
 
   /**
    * ============================================================================

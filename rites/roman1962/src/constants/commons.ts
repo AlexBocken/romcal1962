@@ -72,7 +72,12 @@ export enum CommonDefinition {
   VirginMartyrs = 'VirginMartyrs',
   WomanMartyrs = 'WomanMartyrs',
 
+  //Confessors
+  Confessor = 'Confessor',
+  Confessors = 'Confessors',
+
   // Pastors
+  Deacon = 'Deacon',
   Pastors = 'Pastors',
   Popes = 'Popes',
   Bishops = 'Bishops',
@@ -83,6 +88,7 @@ export enum CommonDefinition {
   DoctorsOfTheChurch = 'DoctorsOfTheChurch',
 
   // Virgins
+  Virgin = 'Virgin',
   Virgins = 'Virgins',
 
   // Holy Men and Women

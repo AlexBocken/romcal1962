@@ -299,27 +299,29 @@ export class ProperOfTime extends CalendarDef {
    */
 
   afterEpiphany(yearOffset = 0): void {
-    // Get the number of Sundays after Epiphany for this year (1-6, variable).
-    // This depends on when Easter falls.
-    const maxSundays = 6; // Maximum possible Sundays after Epiphany
+    // The 1st Sunday after Epiphany is the Holy Family (within the Octave),
+    // defined separately in earlyChristmasTime(). The Sundays generated here
+    // are the 2nd through 6th Sundays after Epiphany, so we offset the
+    // liturgical numbering by +1.
+    const maxSundays = 5; // Maximum post-Octave Sundays (2nd through 6th)
 
-    // Generate all possible Sundays after Epiphany (1-6).
-    // The Dates class will return null for Sundays that don't occur.
     for (let week = 1; week <= maxSundays; week += 1) {
-      this.#newLiturgicalDayDef(`after_epiphany_${week}_${this.#weekdays[0]}`, {
+      const liturgicalWeek = week + 1; // Offset: 1st post-Octave Sunday = 2nd Sunday after Epiphany
+
+      this.#newLiturgicalDayDef(`after_epiphany_${liturgicalWeek}_${this.#weekdays[0]}`, {
         precedence: Precedences.UnprivilegedSunday_6,
         dateDef: { dateFn: 'sundayAfterEpiphany', dateArgs: [week], yearOffset },
         isHolyDayOfObligation: true,
         seasons: [Season.AfterEpiphany],
         periods: [],
-        calendarMetadata: { weekOfSeason: week, dayOfWeek: 0 },
+        calendarMetadata: { weekOfSeason: liturgicalWeek, dayOfWeek: 0 },
         colors: [Colors.Green],
-        i18nDef: ['seasons:after_epiphany.sunday', { week }],
+        i18nDef: ['seasons:after_epiphany.sunday', { week: liturgicalWeek }],
       });
 
       // Weekdays after each Sunday (Monday-Saturday).
       for (let dow = 1; dow < 7; dow += 1) {
-        this.#newLiturgicalDayDef(`after_epiphany_${week}_${this.#weekdays[dow]}`, {
+        this.#newLiturgicalDayDef(`after_epiphany_${liturgicalWeek}_${this.#weekdays[dow]}`, {
           precedence: Precedences.FerialDay_15,
           dateDef: {
             dateFn: 'weekdayAfterSundayAfterEpiphany',
@@ -328,9 +330,9 @@ export class ProperOfTime extends CalendarDef {
           },
           seasons: [Season.AfterEpiphany],
           periods: [],
-          calendarMetadata: { weekOfSeason: week, dayOfWeek: dow },
+          calendarMetadata: { weekOfSeason: liturgicalWeek, dayOfWeek: dow },
           colors: [Colors.Green],
-          i18nDef: ['seasons:after_epiphany.weekday', { week, dow }],
+          i18nDef: ['seasons:after_epiphany.weekday', { week: liturgicalWeek, dow }],
         });
       }
     }

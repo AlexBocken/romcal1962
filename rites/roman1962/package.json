@@ -3,8 +3,17 @@
   "version": "0.0.0",
   "description": "Liturgical calendar for the Roman Rite according to the 1962 Tridentine calendar",
   "license": "MIT",
-  "main": "index.js",
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/esm/romcal.js",
+    "require": "./dist/cjs/romcal.js"
+  },
+  "main": "dist/cjs/romcal.js",
+  "module": "dist/esm/romcal.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
+    "build": "esbuild src/index.ts --bundle --format=esm --outfile=dist/esm/romcal.js --platform=neutral --main-fields=main,module --target=ESNext --sourcemap && esbuild src/index.ts --bundle --format=cjs --outfile=dist/cjs/romcal.js --platform=node --target=ES2022 --sourcemap",
+    "clean": "rimraf coverage dist",
     "test": "TZ=UTC jest --coverage",
     "test:snapshot:update": "TZ=UTC jest -u",
     "test:watch": "TZ=UTC jest --watch",

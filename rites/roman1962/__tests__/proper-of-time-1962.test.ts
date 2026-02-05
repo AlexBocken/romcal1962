@@ -122,23 +122,24 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
 
   describe('After Epiphany', () => {
     test('generates variable Sundays after Epiphany', () => {
-      // At least 1 Sunday should exist
-      expect(definitions['after_epiphany_1_sunday']).toBeDefined();
+      // The 1st Sunday after Epiphany is the Holy Family (in Christmas Time).
+      // afterEpiphany() generates the 2nd through 6th Sundays.
+      expect(definitions['after_epiphany_2_sunday']).toBeDefined();
 
-      const sunday1 = definitions['after_epiphany_1_sunday'];
-      expect(sunday1.seasons).toContain(Season.AfterEpiphany);
-      expect(sunday1.isHolyDayOfObligation).toBe(true);
+      const sunday2 = definitions['after_epiphany_2_sunday'];
+      expect(sunday2.seasons).toContain(Season.AfterEpiphany);
+      expect(sunday2.isHolyDayOfObligation).toBe(true);
     });
 
-    test('number of Sundays after Epiphany varies (1-6)', () => {
+    test('number of Sundays after Epiphany varies (2-6)', () => {
       let count = 0;
-      for (let i = 1; i <= 6; i++) {
+      for (let i = 2; i <= 6; i++) {
         if (definitions[`after_epiphany_${i}_sunday`]) {
           count++;
         }
       }
       expect(count).toBeGreaterThanOrEqual(1);
-      expect(count).toBeLessThanOrEqual(6);
+      expect(count).toBeLessThanOrEqual(5);
     });
   });
 
