@@ -14,6 +14,7 @@
   "scripts": {
     "build": "esbuild src/index.ts --bundle --format=esm --outfile=dist/esm/romcal.js --platform=neutral --main-fields=main,module --target=ESNext --sourcemap && esbuild src/index.ts --bundle --format=cjs --outfile=dist/cjs/romcal.js --platform=node --target=ES2022 --sourcemap",
     "clean": "rimraf coverage dist",
+    "data:checks": "tsx build/data-checks.ts",
     "test": "TZ=UTC jest --coverage",
     "test:snapshot:update": "TZ=UTC jest -u",
     "test:watch": "TZ=UTC jest --watch",
