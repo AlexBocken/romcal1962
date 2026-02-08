@@ -52,6 +52,7 @@ interface MassStructure {
 #### Enums
 
 **PrefaceType**:
+
 - `APOSTLES` - Apostelpräfation
 - `TRINITY` - Dreifaltigkeitspräfation
 - `HOLY_CROSS` - Heilig-Kreuz-Präfation
@@ -60,10 +61,12 @@ interface MassStructure {
 - `PROPER` - eigene Präfation
 
 **CommunicantesType**:
+
 - `COMMON` - gewöhnliches Communicantes
 - `PROPER` - eigenes Communicantes
 
 **MassPartSource**:
+
 - `FROM_SUNDAY` - vom Sonntag (v So)
 - `FROM_WEEKDAY` - vom Wochentag (v Wo)
 - `PROPER` - Proper to this day
@@ -74,17 +77,17 @@ The changing parts of the Mass with optional biblical references:
 
 ```typescript
 interface MassPropers {
-  introitus?: ProperText;      // Entrance Antiphon
-  oratio?: ProperText;         // Collect/Opening Prayer
-  lectio?: ProperText;         // Epistle/First Reading
-  graduale?: ProperText;       // Gradual
-  tractus?: ProperText;        // Tract (replaces Alleluia)
-  sequentia?: ProperText;      // Sequence
-  evangelium?: ProperText;     // Gospel
-  offertorium?: ProperText;    // Offertory Antiphon
-  secreta?: ProperText;        // Secret Prayer
-  communio?: ProperText;       // Communion Antiphon
-  postcommunio?: ProperText;   // Post-communion Prayer
+  introitus?: ProperText; // Entrance Antiphon
+  oratio?: ProperText; // Collect/Opening Prayer
+  lectio?: ProperText; // Epistle/First Reading
+  graduale?: ProperText; // Gradual
+  tractus?: ProperText; // Tract (replaces Alleluia)
+  sequentia?: ProperText; // Sequence
+  evangelium?: ProperText; // Gospel
+  offertorium?: ProperText; // Offertory Antiphon
+  secreta?: ProperText; // Secret Prayer
+  communio?: ProperText; // Communion Antiphon
+  postcommunio?: ProperText; // Post-communion Prayer
 }
 ```
 
@@ -125,8 +128,8 @@ The complete mass data structure:
 
 ```typescript
 interface MassData {
-  structure?: MassStructure;  // Which parts to include
-  propers?: MassPropers;       // The actual texts
+  structure?: MassStructure; // Which parts to include
+  propers?: MassPropers; // The actual texts
 }
 ```
 
@@ -151,6 +154,7 @@ interface LiturgicalDay {
 To avoid overloading data packages, the API provides multiple endpoints:
 
 ### 1. Lightweight Calendar (Default)
+
 **Endpoint**: `GET /api/calendar/:year`
 
 Returns the full year calendar without mass propers. Includes only `massPropersSummary` which indicates which parts have propers available.
@@ -158,6 +162,7 @@ Returns the full year calendar without mass propers. Includes only `massPropersS
 **Use case**: Initial calendar view, performance-optimized
 
 ### 2. Detailed Calendar
+
 **Endpoint**: `GET /api/calendar/:year/detailed`
 
 Returns the full year calendar WITH mass propers for all days.
@@ -165,6 +170,7 @@ Returns the full year calendar WITH mass propers for all days.
 **Use case**: When full data is needed for the entire year
 
 ### 3. Single Day Data
+
 **Endpoint**: `GET /api/calendar/:year/:date`
 
 Returns detailed data for a specific date including mass propers.
@@ -174,6 +180,7 @@ Returns detailed data for a specific date including mass propers.
 **Use case**: User clicks on a specific day to see details
 
 ### 4. Propers Only
+
 **Endpoint**: `GET /api/propers/:year/:date`
 
 Returns only the mass propers for a specific date (no other liturgical data).
@@ -188,14 +195,12 @@ The `Romcal` class has been updated:
 
 ```typescript
 class Romcal {
-  async generateCalendar(
-    year?: number | string,
-    options?: { includeMass?: boolean }
-  ): Promise<LiturgicalCalendar>
+  async generateCalendar(year?: number | string, options?: { includeMass?: boolean }): Promise<LiturgicalCalendar>;
 }
 ```
 
 **Usage**:
+
 ```typescript
 // Lightweight - no mass propers
 const calendar = await romcal.generateCalendar(2026);
@@ -256,6 +261,7 @@ locales/
 ```
 
 **Example structure**:
+
 ```json
 {
   "propers": {
@@ -281,6 +287,7 @@ locales/
 ## Migration Path
 
 For existing code:
+
 1. No changes needed if you don't use mass data
 2. `generateCalendar()` still works without options
 3. All new fields are optional
@@ -289,6 +296,7 @@ For existing code:
 ## Future Enhancements
 
 Potential additions:
+
 - Translation context/notes for rubrics
 - Cross-references between proper texts
 - Audio/chant notation references
