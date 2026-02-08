@@ -5,11 +5,17 @@ import { Season } from '../src/constants/seasons';
 import { RomcalConfig } from '../src/models/config';
 import { ProperOfTime } from '../src/proper-of-time/proper-of-time';
 import { Inputs } from '../src/types/calendar-def';
+import { LiturgicalDayProperOfTimeInput } from '../src/types/liturgical-day';
 import { Dates } from '../src/utils/dates';
 
 describe('1962 Tridentine Calendar - ProperOfTime', () => {
   let properOfTime: ProperOfTime;
   let definitions: Inputs;
+
+  const getEntry = (key: string): LiturgicalDayProperOfTimeInput => {
+    const entry = definitions[key];
+    return (Array.isArray(entry) ? entry[0] : entry) as LiturgicalDayProperOfTimeInput;
+  };
 
   beforeAll(() => {
     // Create a mock config for testing
@@ -25,7 +31,7 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     };
 
     // Add dates after creating the config
-    mockConfig.dates = new Dates(mockConfig as RomcalConfig, 2025) as typeof Dates;
+    mockConfig.dates = new Dates(mockConfig as RomcalConfig, 2025) as unknown as typeof Dates;
 
     properOfTime = new ProperOfTime(mockConfig as RomcalConfig);
 
@@ -45,14 +51,14 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     });
 
     test('generates 4 Sundays of Advent', () => {
-      expect(definitions['advent_1_sunday']).toBeDefined();
-      expect(definitions['advent_2_sunday']).toBeDefined();
-      expect(definitions['advent_3_sunday']).toBeDefined();
-      expect(definitions['advent_4_sunday']).toBeDefined();
+      expect(getEntry('advent_1_sunday')).toBeDefined();
+      expect(getEntry('advent_2_sunday')).toBeDefined();
+      expect(getEntry('advent_3_sunday')).toBeDefined();
+      expect(getEntry('advent_4_sunday')).toBeDefined();
     });
 
     test('Advent Sundays have correct precedence and color', () => {
-      const adventSunday1 = definitions['advent_1_sunday'];
+      const adventSunday1 = getEntry('advent_1_sunday');
       expect(adventSunday1.precedence).toBe(Precedences.PrivilegedSunday_2);
       expect(adventSunday1.colors).toContain(Colors.Purple);
       expect(adventSunday1.seasons).toContain(Season.Advent);
@@ -60,21 +66,21 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     });
 
     test('generates Ember Days in Advent', () => {
-      expect(definitions['advent_3_wednesday_ember']).toBeDefined();
-      expect(definitions['advent_3_friday_ember']).toBeDefined();
-      expect(definitions['advent_3_saturday_ember']).toBeDefined();
+      expect(getEntry('advent_3_wednesday_ember')).toBeDefined();
+      expect(getEntry('advent_3_friday_ember')).toBeDefined();
+      expect(getEntry('advent_3_saturday_ember')).toBeDefined();
 
-      const emberWed = definitions['advent_3_wednesday_ember'];
+      const emberWed = getEntry('advent_3_wednesday_ember');
       expect(emberWed.periods).toContain(Period.EmberDays);
       expect(emberWed.precedence).toBe(Precedences.PrivilegedFeria_10);
     });
 
     test('generates privileged weekdays Dec 17-24', () => {
-      expect(definitions['advent_december_17']).toBeDefined();
-      expect(definitions['advent_december_18']).toBeDefined();
-      expect(definitions['advent_december_23']).toBeDefined();
+      expect(getEntry('advent_december_17')).toBeDefined();
+      expect(getEntry('advent_december_18')).toBeDefined();
+      expect(getEntry('advent_december_23')).toBeDefined();
 
-      const dec17 = definitions['advent_december_17'];
+      const dec17 = getEntry('advent_december_17');
       expect(dec17.precedence).toBe(Precedences.PrivilegedFeria_10);
       expect(dec17.seasons).toContain(Season.Advent);
     });
@@ -82,7 +88,7 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
 
   describe('Christmas Time', () => {
     test('generates Christmas Day', () => {
-      const christmas = definitions['nativity_of_the_lord'];
+      const christmas = getEntry('nativity_of_the_lord');
       expect(christmas).toBeDefined();
       expect(christmas.precedence).toBe(Precedences.ProperOfTimeSolemnity_2);
       expect(christmas.colors).toContain(Colors.White);
@@ -90,16 +96,16 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     });
 
     test('generates Christmas Octave', () => {
-      expect(definitions['christmas_octave_day_2']).toBeDefined();
-      expect(definitions['christmas_octave_day_3']).toBeDefined();
+      expect(getEntry('christmas_octave_day_2')).toBeDefined();
+      expect(getEntry('christmas_octave_day_3')).toBeDefined();
 
-      const day2 = definitions['christmas_octave_day_2'];
+      const day2 = getEntry('christmas_octave_day_2');
       expect(day2.periods).toContain(Period.ChristmasOctave);
       expect(day2.seasons).toContain(Season.ChristmasTime);
     });
 
     test('generates Epiphany on January 6', () => {
-      const epiphany = definitions['epiphany_of_the_lord'];
+      const epiphany = getEntry('epiphany_of_the_lord');
       expect(epiphany).toBeDefined();
       expect(epiphany.precedence).toBe(Precedences.ProperOfTimeSolemnity_2);
       expect(epiphany.isHolyDayOfObligation).toBe(true);
@@ -107,14 +113,14 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
 
     test('generates Epiphany Octave', () => {
       // Epiphany Octave days are Jan 7-12
-      expect(definitions['epiphany_octave_day_7']).toBeDefined();
-      expect(definitions['epiphany_octave_day_12']).toBeDefined();
+      expect(getEntry('epiphany_octave_day_7')).toBeDefined();
+      expect(getEntry('epiphany_octave_day_12')).toBeDefined();
 
-      const octaveDay = definitions['epiphany_octave_day_7'];
+      const octaveDay = getEntry('epiphany_octave_day_7');
       expect(octaveDay.periods).toContain(Period.EpiphanyOctave);
 
       // Octave Day of Epiphany (Jan 13)
-      const epiphanyOctave = definitions['octave_day_of_epiphany'];
+      const epiphanyOctave = getEntry('octave_day_of_epiphany');
       expect(epiphanyOctave).toBeDefined();
       expect(epiphanyOctave.periods).toContain(Period.EpiphanyOctave);
     });
@@ -124,9 +130,9 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     test('generates variable Sundays after Epiphany', () => {
       // The 1st Sunday after Epiphany is the Holy Family (in Christmas Time).
       // afterEpiphany() generates the 2nd through 6th Sundays.
-      expect(definitions['after_epiphany_2_sunday']).toBeDefined();
+      expect(getEntry('after_epiphany_2_sunday')).toBeDefined();
 
-      const sunday2 = definitions['after_epiphany_2_sunday'];
+      const sunday2 = getEntry('after_epiphany_2_sunday');
       expect(sunday2.seasons).toContain(Season.AfterEpiphany);
       expect(sunday2.isHolyDayOfObligation).toBe(true);
     });
@@ -134,7 +140,7 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     test('number of Sundays after Epiphany varies (2-6)', () => {
       let count = 0;
       for (let i = 2; i <= 6; i++) {
-        if (definitions[`after_epiphany_${i}_sunday`]) {
+        if (getEntry(`after_epiphany_${i}_sunday`)) {
           count++;
         }
       }
@@ -145,13 +151,13 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
 
   describe('Septuagesima Time', () => {
     test('generates 3 pre-Lenten Sundays', () => {
-      expect(definitions['septuagesima_sunday']).toBeDefined();
-      expect(definitions['sexagesima_sunday']).toBeDefined();
-      expect(definitions['quinquagesima_sunday']).toBeDefined();
+      expect(getEntry('septuagesima_sunday')).toBeDefined();
+      expect(getEntry('sexagesima_sunday')).toBeDefined();
+      expect(getEntry('quinquagesima_sunday')).toBeDefined();
     });
 
     test('Septuagesima Sundays have correct properties', () => {
-      const septuagesima = definitions['septuagesima_sunday'];
+      const septuagesima = getEntry('septuagesima_sunday');
       expect(septuagesima).toBeDefined();
       expect(septuagesima.seasons).toContain(Season.SeptuagesimaTime);
       expect(septuagesima.colors).toContain(Colors.Purple);
@@ -161,7 +167,7 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
 
   describe('Lent', () => {
     test('generates Ash Wednesday', () => {
-      const ashWed = definitions['ash_wednesday'];
+      const ashWed = getEntry('ash_wednesday');
       expect(ashWed).toBeDefined();
       expect(ashWed.seasons).toContain(Season.Lent);
       expect(ashWed.periods).toContain(Period.EmberDays);
@@ -169,8 +175,8 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     });
 
     test('generates Ember Days in Lent', () => {
-      const ashWed = definitions['ash_wednesday'];
-      const emberSat = definitions['saturday_after_ash_wednesday'];
+      const ashWed = getEntry('ash_wednesday');
+      const emberSat = getEntry('saturday_after_ash_wednesday');
 
       expect(ashWed.periods).toContain(Period.EmberDays);
       expect(emberSat).toBeDefined();
@@ -178,14 +184,14 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     });
 
     test('generates 4 Sundays of Lent', () => {
-      expect(definitions['lent_1_sunday']).toBeDefined();
-      expect(definitions['lent_2_sunday']).toBeDefined();
-      expect(definitions['lent_3_sunday']).toBeDefined();
-      expect(definitions['lent_4_sunday']).toBeDefined();
+      expect(getEntry('lent_1_sunday')).toBeDefined();
+      expect(getEntry('lent_2_sunday')).toBeDefined();
+      expect(getEntry('lent_3_sunday')).toBeDefined();
+      expect(getEntry('lent_4_sunday')).toBeDefined();
     });
 
     test('Laetare Sunday (4th Sunday) can use rose', () => {
-      const laetare = definitions['lent_4_sunday'];
+      const laetare = getEntry('lent_4_sunday');
       expect(laetare.colors).toContain(Colors.Rose);
       expect(laetare.colors).toContain(Colors.Purple);
     });
@@ -193,7 +199,7 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
 
   describe('Passiontide', () => {
     test('generates Passion Sunday', () => {
-      const passionSunday = definitions['passion_sunday'];
+      const passionSunday = getEntry('passion_sunday');
       expect(passionSunday).toBeDefined();
       expect(passionSunday.seasons).toContain(Season.Passiontide);
       expect(passionSunday.periods).toContain(Period.Passiontide);
@@ -201,13 +207,13 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     });
 
     test('generates Passion Week weekdays', () => {
-      expect(definitions['passion_week_monday']).toBeDefined();
-      expect(definitions['passion_week_tuesday']).toBeDefined();
-      expect(definitions['passion_week_saturday']).toBeDefined();
+      expect(getEntry('passion_week_monday')).toBeDefined();
+      expect(getEntry('passion_week_tuesday')).toBeDefined();
+      expect(getEntry('passion_week_saturday')).toBeDefined();
     });
 
     test('generates Palm Sunday', () => {
-      const palmSunday = definitions['palm_sunday'];
+      const palmSunday = getEntry('palm_sunday');
       expect(palmSunday).toBeDefined();
       expect(palmSunday.seasons).toContain(Season.Passiontide);
       expect(palmSunday.periods).toContain(Period.HolyWeek);
@@ -215,9 +221,9 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     });
 
     test('generates Holy Week Monday-Wednesday', () => {
-      const holyMon = definitions['holy_monday'];
-      const holyTue = definitions['holy_tuesday'];
-      const holyWed = definitions['holy_wednesday'];
+      const holyMon = getEntry('holy_monday');
+      const holyTue = getEntry('holy_tuesday');
+      const holyWed = getEntry('holy_wednesday');
 
       expect(holyMon).toBeDefined();
       expect(holyTue).toBeDefined();
@@ -230,7 +236,7 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
 
   describe('Paschal Triduum', () => {
     test('generates Holy Thursday', () => {
-      const holyThu = definitions['holy_thursday'];
+      const holyThu = getEntry('holy_thursday');
       expect(holyThu).toBeDefined();
       expect(holyThu.precedence).toBe(Precedences.Triduum_1);
       expect(holyThu.seasons).toContain(Season.PaschalTriduum);
@@ -238,7 +244,7 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     });
 
     test('generates Good Friday', () => {
-      const goodFri = definitions['good_friday'];
+      const goodFri = getEntry('good_friday');
       expect(goodFri).toBeDefined();
       expect(goodFri.precedence).toBe(Precedences.Triduum_1);
       expect(goodFri.seasons).toContain(Season.PaschalTriduum);
@@ -246,14 +252,14 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     });
 
     test('generates Holy Saturday', () => {
-      const holySat = definitions['holy_saturday'];
+      const holySat = getEntry('holy_saturday');
       expect(holySat).toBeDefined();
       expect(holySat.precedence).toBe(Precedences.Triduum_1);
       expect(holySat.seasons).toContain(Season.PaschalTriduum);
     });
 
     test('generates Easter Sunday', () => {
-      const easter = definitions['easter_sunday'];
+      const easter = getEntry('easter_sunday');
       expect(easter).toBeDefined();
       expect(easter.precedence).toBe(Precedences.Triduum_1);
       expect(easter.seasons).toContain(Season.EasterTime);
@@ -263,10 +269,10 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     });
 
     test('Triduum days have highest precedence', () => {
-      const holyThu = definitions['holy_thursday'];
-      const goodFri = definitions['good_friday'];
-      const holySat = definitions['holy_saturday'];
-      const easter = definitions['easter_sunday'];
+      const holyThu = getEntry('holy_thursday');
+      const goodFri = getEntry('good_friday');
+      const holySat = getEntry('holy_saturday');
+      const easter = getEntry('easter_sunday');
 
       expect(holyThu.precedence).toBe(Precedences.Triduum_1);
       expect(goodFri.precedence).toBe(Precedences.Triduum_1);
@@ -277,42 +283,42 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
 
   describe('Easter Time', () => {
     test('generates Easter Octave', () => {
-      expect(definitions['easter_monday']).toBeDefined();
-      expect(definitions['easter_tuesday']).toBeDefined();
-      expect(definitions['easter_saturday']).toBeDefined();
+      expect(getEntry('easter_monday')).toBeDefined();
+      expect(getEntry('easter_tuesday')).toBeDefined();
+      expect(getEntry('easter_saturday')).toBeDefined();
 
-      const easterMon = definitions['easter_monday'];
+      const easterMon = getEntry('easter_monday');
       expect(easterMon.periods).toContain(Period.EasterOctave);
       expect(easterMon.seasons).toContain(Season.EasterTime);
       expect(easterMon.precedence).toBe(Precedences.ProperOfTimeSolemnity_2);
     });
 
     test('generates Sunday within Octave of Easter', () => {
-      const lowSunday = definitions['sunday_within_octave_of_easter'];
+      const lowSunday = getEntry('sunday_within_octave_of_easter');
       expect(lowSunday).toBeDefined();
       expect(lowSunday.periods).toContain(Period.EasterOctave);
       expect(lowSunday.precedence).toBe(Precedences.PrivilegedSunday_2);
     });
 
     test('generates Sundays after Easter (2-5)', () => {
-      expect(definitions['sunday_after_easter_2']).toBeDefined();
-      expect(definitions['sunday_after_easter_3']).toBeDefined();
-      expect(definitions['sunday_after_easter_4']).toBeDefined();
-      expect(definitions['sunday_after_easter_5']).toBeDefined();
+      expect(getEntry('sunday_after_easter_2')).toBeDefined();
+      expect(getEntry('sunday_after_easter_3')).toBeDefined();
+      expect(getEntry('sunday_after_easter_4')).toBeDefined();
+      expect(getEntry('sunday_after_easter_5')).toBeDefined();
     });
 
     test('generates Rogation Days', () => {
-      expect(definitions['rogation_monday']).toBeDefined();
-      expect(definitions['rogation_tuesday']).toBeDefined();
-      expect(definitions['rogation_wednesday']).toBeDefined();
+      expect(getEntry('rogation_monday')).toBeDefined();
+      expect(getEntry('rogation_tuesday')).toBeDefined();
+      expect(getEntry('rogation_wednesday')).toBeDefined();
 
-      const rogationMon = definitions['rogation_monday'];
+      const rogationMon = getEntry('rogation_monday');
       expect(rogationMon.periods).toContain(Period.RogationDays);
       expect(rogationMon.colors).toContain(Colors.Purple);
     });
 
     test('generates Ascension on Thursday', () => {
-      const ascension = definitions['ascension'];
+      const ascension = getEntry('ascension');
       expect(ascension).toBeDefined();
       expect(ascension.precedence).toBe(Precedences.ProperOfTimeSolemnity_2);
       expect(ascension.periods).toContain(Period.AscensionOctave);
@@ -320,22 +326,22 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     });
 
     test('generates Ascension Octave', () => {
-      expect(definitions['ascension_octave_friday']).toBeDefined();
-      expect(definitions['ascension_octave_saturday']).toBeDefined();
-      expect(definitions['sunday_within_octave_of_ascension']).toBeDefined();
+      expect(getEntry('ascension_octave_friday')).toBeDefined();
+      expect(getEntry('ascension_octave_saturday')).toBeDefined();
+      expect(getEntry('sunday_within_octave_of_ascension')).toBeDefined();
 
-      const ascensionFri = definitions['ascension_octave_friday'];
+      const ascensionFri = getEntry('ascension_octave_friday');
       expect(ascensionFri.periods).toContain(Period.AscensionOctave);
     });
 
     test('generates Vigil of Pentecost', () => {
-      const vigil = definitions['vigil_of_pentecost'];
+      const vigil = getEntry('vigil_of_pentecost');
       expect(vigil).toBeDefined();
       expect(vigil.colors).toContain(Colors.Red);
     });
 
     test('generates Pentecost Sunday', () => {
-      const pentecost = definitions['pentecost_sunday'];
+      const pentecost = getEntry('pentecost_sunday');
       expect(pentecost).toBeDefined();
       expect(pentecost.precedence).toBe(Precedences.ProperOfTimeSolemnity_2);
       expect(pentecost.seasons).toContain(Season.PentecostSeason);
@@ -346,17 +352,17 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
 
   describe('Pentecost Season', () => {
     test('generates Pentecost Octave', () => {
-      expect(definitions['pentecost_monday']).toBeDefined();
-      expect(definitions['pentecost_tuesday']).toBeDefined();
-      expect(definitions['pentecost_saturday']).toBeDefined();
+      expect(getEntry('pentecost_monday')).toBeDefined();
+      expect(getEntry('pentecost_tuesday')).toBeDefined();
+      expect(getEntry('pentecost_saturday')).toBeDefined();
 
-      const pentecostMon = definitions['pentecost_monday'];
+      const pentecostMon = getEntry('pentecost_monday');
       expect(pentecostMon.periods).toContain(Period.PentecostOctave);
       expect(pentecostMon.colors).toContain(Colors.Red);
     });
 
     test('generates Trinity Sunday', () => {
-      const trinity = definitions['trinity_sunday'];
+      const trinity = getEntry('trinity_sunday');
       expect(trinity).toBeDefined();
       expect(trinity.precedence).toBe(Precedences.ProperOfTimeSolemnity_2);
       expect(trinity.colors).toContain(Colors.White);
@@ -364,17 +370,17 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     });
 
     test('generates Ember Days after Pentecost', () => {
-      expect(definitions['ember_wednesday_pentecost']).toBeDefined();
-      expect(definitions['ember_friday_pentecost']).toBeDefined();
-      expect(definitions['ember_saturday_pentecost']).toBeDefined();
+      expect(getEntry('ember_wednesday_pentecost')).toBeDefined();
+      expect(getEntry('ember_friday_pentecost')).toBeDefined();
+      expect(getEntry('ember_saturday_pentecost')).toBeDefined();
 
-      const emberWed = definitions['ember_wednesday_pentecost'];
+      const emberWed = getEntry('ember_wednesday_pentecost');
       expect(emberWed.periods).toContain(Period.EmberDays);
       expect(emberWed.colors).toContain(Colors.Red);
     });
 
     test('generates Corpus Christi on Thursday', () => {
-      const corpusChristi = definitions['corpus_christi'];
+      const corpusChristi = getEntry('corpus_christi');
       expect(corpusChristi).toBeDefined();
       expect(corpusChristi.precedence).toBe(Precedences.ProperOfTimeSolemnity_2);
       expect(corpusChristi.periods).toContain(Period.CorpusChristiOctave);
@@ -383,17 +389,17 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     });
 
     test('generates Corpus Christi Octave', () => {
-      expect(definitions['corpus_christi_octave_friday']).toBeDefined();
-      expect(definitions['corpus_christi_octave_saturday']).toBeDefined();
-      expect(definitions['sunday_after_pentecost_2']).toBeDefined();
-      expect(definitions['corpus_christi_octave_weekday_monday']).toBeDefined();
+      expect(getEntry('corpus_christi_octave_friday')).toBeDefined();
+      expect(getEntry('corpus_christi_octave_saturday')).toBeDefined();
+      expect(getEntry('sunday_after_pentecost_2')).toBeDefined();
+      expect(getEntry('corpus_christi_octave_weekday_monday')).toBeDefined();
 
-      const octaveFri = definitions['corpus_christi_octave_friday'];
+      const octaveFri = getEntry('corpus_christi_octave_friday');
       expect(octaveFri.periods).toContain(Period.CorpusChristiOctave);
     });
 
     test('generates Sacred Heart', () => {
-      const sacredHeart = definitions['sacred_heart'];
+      const sacredHeart = getEntry('sacred_heart');
       expect(sacredHeart).toBeDefined();
       expect(sacredHeart.precedence).toBe(Precedences.ProperOfTimeSolemnity_2);
       expect(sacredHeart.colors).toContain(Colors.White);
@@ -403,7 +409,7 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
       let count = 0;
       // Note: Sundays start from week 3 (Trinity Sunday is week 1, 2nd Sunday is week 2)
       for (let i = 3; i <= 28; i++) {
-        if (definitions[`sunday_after_pentecost_${i}`]) {
+        if (getEntry(`sunday_after_pentecost_${i}`)) {
           count++;
         }
       }
@@ -415,22 +421,22 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
       // Find the last Sunday
       let lastSunday = null;
       for (let i = 28; i >= 1; i--) {
-        if (definitions[`sunday_after_pentecost_${i}`]) {
-          lastSunday = definitions[`sunday_after_pentecost_${i}`];
+        if (getEntry(`sunday_after_pentecost_${i}`)) {
+          lastSunday = getEntry(`sunday_after_pentecost_${i}`);
           break;
         }
       }
 
       expect(lastSunday).toBeDefined();
-      expect(lastSunday.i18nDef).toContain('seasons:pentecost_season.last_sunday_after_pentecost');
+      expect(lastSunday!.i18nDef).toContain('seasons:pentecost_season.last_sunday_after_pentecost');
     });
 
     test('generates September Ember Days', () => {
-      expect(definitions['ember_wednesday_september']).toBeDefined();
-      expect(definitions['ember_friday_september']).toBeDefined();
-      expect(definitions['ember_saturday_september']).toBeDefined();
+      expect(getEntry('ember_wednesday_september')).toBeDefined();
+      expect(getEntry('ember_friday_september')).toBeDefined();
+      expect(getEntry('ember_saturday_september')).toBeDefined();
 
-      const emberWed = definitions['ember_wednesday_september'];
+      const emberWed = getEntry('ember_wednesday_september');
       expect(emberWed.periods).toContain(Period.EmberDays);
       expect(emberWed.colors).toContain(Colors.Purple);
     });
@@ -438,8 +444,8 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
 
   describe('Liturgical Colors', () => {
     test('uses purple for Advent and Lent', () => {
-      const advent1 = definitions['advent_1_sunday'];
-      const lent1 = definitions['lent_1_sunday'];
+      const advent1 = getEntry('advent_1_sunday');
+      const lent1 = getEntry('lent_1_sunday');
 
       expect(advent1).toBeDefined();
       expect(lent1).toBeDefined();
@@ -448,9 +454,9 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     });
 
     test('uses white for Christmas and Easter seasons', () => {
-      const christmas = definitions['nativity_of_the_lord'];
-      const easter = definitions['easter_sunday'];
-      const ascension = definitions['ascension'];
+      const christmas = getEntry('nativity_of_the_lord');
+      const easter = getEntry('easter_sunday');
+      const ascension = getEntry('ascension');
 
       expect(christmas).toBeDefined();
       expect(easter).toBeDefined();
@@ -461,36 +467,36 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     });
 
     test('uses red for Pentecost', () => {
-      const pentecost = definitions['pentecost_sunday'];
-      const pentecostMon = definitions['pentecost_monday'];
+      const pentecost = getEntry('pentecost_sunday');
+      const pentecostMon = getEntry('pentecost_monday');
 
       expect(pentecost.colors).toContain(Colors.Red);
       expect(pentecostMon.colors).toContain(Colors.Red);
     });
 
     test('uses green for Sundays after Pentecost', () => {
-      const sunday3 = definitions['sunday_after_pentecost_3'];
+      const sunday3 = getEntry('sunday_after_pentecost_3');
       expect(sunday3).toBeDefined();
       expect(sunday3.colors).toContain(Colors.Green);
     });
 
     test('allows rose for Laetare Sunday', () => {
-      const laetare = definitions['lent_4_sunday'];
+      const laetare = getEntry('lent_4_sunday');
       expect(laetare.colors).toContain(Colors.Rose);
     });
   });
 
   describe('Precedence Levels', () => {
     test('Triduum has highest precedence', () => {
-      const holyThu = definitions['holy_thursday'];
+      const holyThu = getEntry('holy_thursday');
       expect(holyThu).toBeDefined();
       expect(holyThu.precedence).toBe(Precedences.Triduum_1);
     });
 
     test('Major solemnities have ProperOfTimeSolemnity_2', () => {
-      const christmas = definitions['nativity_of_the_lord'];
-      const epiphany = definitions['epiphany_of_the_lord'];
-      const ascension = definitions['ascension'];
+      const christmas = getEntry('nativity_of_the_lord');
+      const epiphany = getEntry('epiphany_of_the_lord');
+      const ascension = getEntry('ascension');
 
       expect(christmas).toBeDefined();
       expect(epiphany).toBeDefined();
@@ -501,8 +507,8 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     });
 
     test('Privileged Sundays have PrivilegedSunday_2', () => {
-      const advent1 = definitions['advent_1_sunday'];
-      const passionSunday = definitions['passion_sunday'];
+      const advent1 = getEntry('advent_1_sunday');
+      const passionSunday = getEntry('passion_sunday');
 
       expect(advent1).toBeDefined();
       expect(passionSunday).toBeDefined();
@@ -511,8 +517,8 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     });
 
     test('Privileged ferias have PrivilegedFeria_10', () => {
-      const ashWed = definitions['ash_wednesday'];
-      const holyMon = definitions['holy_monday'];
+      const ashWed = getEntry('ash_wednesday');
+      const holyMon = getEntry('holy_monday');
 
       expect(ashWed.precedence).toBe(Precedences.PrivilegedFeria_10);
       expect(holyMon.precedence).toBe(Precedences.HolyWeek_2);
@@ -521,8 +527,8 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
 
   describe('Holy Days of Obligation', () => {
     test('marks Sundays as holy days', () => {
-      const advent1 = definitions['advent_1_sunday'];
-      const easter = definitions['easter_sunday'];
+      const advent1 = getEntry('advent_1_sunday');
+      const easter = getEntry('easter_sunday');
 
       expect(advent1).toBeDefined();
       expect(easter).toBeDefined();
@@ -531,9 +537,9 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     });
 
     test('marks major solemnities as holy days', () => {
-      const christmas = definitions['nativity_of_the_lord'];
-      const epiphany = definitions['epiphany_of_the_lord'];
-      const ascension = definitions['ascension'];
+      const christmas = getEntry('nativity_of_the_lord');
+      const epiphany = getEntry('epiphany_of_the_lord');
+      const ascension = getEntry('ascension');
 
       expect(christmas).toBeDefined();
       expect(epiphany).toBeDefined();
@@ -544,7 +550,7 @@ describe('1962 Tridentine Calendar - ProperOfTime', () => {
     });
 
     test('does not mark weekdays as holy days (except major feasts)', () => {
-      const ashWed = definitions['ash_wednesday'];
+      const ashWed = getEntry('ash_wednesday');
       expect(ashWed.isHolyDayOfObligation).toBeUndefined();
     });
   });

@@ -1,14 +1,26 @@
 import { GeneralRoman1962 } from '../src/calendars/general-roman';
 import { Colors } from '../src/constants/colors';
 import { CommonDefinition as Common } from '../src/constants/commons';
-import { Ranks } from '../src/constants/ranks';
+import { Rank, Ranks } from '../src/constants/ranks';
 import { RomcalConfig } from '../src/models/config';
 import { Inputs } from '../src/types/calendar-def';
+import { LiturgicalDayInput } from '../src/types/liturgical-day';
 import { Dates } from '../src/utils/dates';
+
+/**
+ * Extended input type that includes the `rank` property set in calendar definitions
+ * but not part of the base LiturgicalDayInput type (rank is normally computed from precedence).
+ */
+type CalendarInput = LiturgicalDayInput & { rank?: Rank };
 
 describe('1962 Tridentine Calendar - GeneralRoman1962', () => {
   let calendar: GeneralRoman1962;
   let definitions: Inputs;
+
+  const getEntry = (key: string): CalendarInput => {
+    const entry = definitions[key];
+    return (Array.isArray(entry) ? entry[0] : entry) as CalendarInput;
+  };
 
   beforeAll(() => {
     // Create a mock config for testing
@@ -22,7 +34,7 @@ describe('1962 Tridentine Calendar - GeneralRoman1962', () => {
     };
 
     // Add dates after creating the config
-    mockConfig.dates = new Dates(mockConfig as RomcalConfig, 2025) as typeof Dates;
+    mockConfig.dates = new Dates(mockConfig as RomcalConfig, 2025) as unknown as typeof Dates;
 
     calendar = new GeneralRoman1962(mockConfig as RomcalConfig);
 
@@ -50,7 +62,7 @@ describe('1962 Tridentine Calendar - GeneralRoman1962', () => {
 
   describe('Major Solemnities - I Class', () => {
     test('Circumcision / Octave Day of Nativity (Jan 1)', () => {
-      const feast = definitions['octave_day_of_the_nativity_circumcision'];
+      const feast = getEntry('octave_day_of_the_nativity_circumcision');
       expect(feast).toBeDefined();
       expect(feast.rank).toBe(Ranks.FirstClass);
       expect(feast.colors).toBe(Colors.White);
@@ -59,7 +71,7 @@ describe('1962 Tridentine Calendar - GeneralRoman1962', () => {
     });
 
     test('Epiphany (Jan 6)', () => {
-      const feast = definitions['epiphany_of_the_lord'];
+      const feast = getEntry('epiphany_of_the_lord');
       expect(feast).toBeDefined();
       expect(feast.rank).toBe(Ranks.FirstClass);
       expect(feast.colors).toBe(Colors.White);
@@ -68,7 +80,7 @@ describe('1962 Tridentine Calendar - GeneralRoman1962', () => {
     });
 
     test('St. Joseph (Mar 19)', () => {
-      const feast = definitions['joseph_spouse_of_mary'];
+      const feast = getEntry('joseph_spouse_of_mary');
       expect(feast).toBeDefined();
       expect(feast.rank).toBe(Ranks.FirstClass);
       expect(feast.colors).toBe(Colors.White);
@@ -77,7 +89,7 @@ describe('1962 Tridentine Calendar - GeneralRoman1962', () => {
     });
 
     test('Annunciation (Mar 25)', () => {
-      const feast = definitions['annunciation_of_the_lord'];
+      const feast = getEntry('annunciation_of_the_lord');
       expect(feast).toBeDefined();
       expect(feast.rank).toBe(Ranks.FirstClass);
       expect(feast.colors).toBe(Colors.White);
@@ -86,7 +98,7 @@ describe('1962 Tridentine Calendar - GeneralRoman1962', () => {
     });
 
     test('Nativity of St. John the Baptist (Jun 24)', () => {
-      const feast = definitions['nativity_of_saint_john_the_baptist'];
+      const feast = getEntry('nativity_of_saint_john_the_baptist');
       expect(feast).toBeDefined();
       expect(feast.rank).toBe(Ranks.FirstClass);
       expect(feast.colors).toBe(Colors.White);
@@ -95,7 +107,7 @@ describe('1962 Tridentine Calendar - GeneralRoman1962', () => {
     });
 
     test('SS. Peter and Paul (Jun 29)', () => {
-      const feast = definitions['peter_and_paul_apostles'];
+      const feast = getEntry('peter_and_paul_apostles');
       expect(feast).toBeDefined();
       expect(feast.rank).toBe(Ranks.FirstClass);
       expect(feast.colors).toBe(Colors.Red);
@@ -104,7 +116,7 @@ describe('1962 Tridentine Calendar - GeneralRoman1962', () => {
     });
 
     test('Assumption (Aug 15)', () => {
-      const feast = definitions['assumption_of_the_blessed_virgin_mary'];
+      const feast = getEntry('assumption_of_the_blessed_virgin_mary');
       expect(feast).toBeDefined();
       expect(feast.rank).toBe(Ranks.FirstClass);
       expect(feast.colors).toBe(Colors.White);
@@ -113,7 +125,7 @@ describe('1962 Tridentine Calendar - GeneralRoman1962', () => {
     });
 
     test('All Saints (Nov 1)', () => {
-      const feast = definitions['all_saints'];
+      const feast = getEntry('all_saints');
       expect(feast).toBeDefined();
       expect(feast.rank).toBe(Ranks.FirstClass);
       expect(feast.colors).toBe(Colors.White);
@@ -122,7 +134,7 @@ describe('1962 Tridentine Calendar - GeneralRoman1962', () => {
     });
 
     test('All Souls (Nov 2)', () => {
-      const feast = definitions['all_souls'];
+      const feast = getEntry('all_souls');
       expect(feast).toBeDefined();
       expect(feast.rank).toBe(Ranks.FirstClass);
       expect(feast.colors).toContain(Colors.Purple);
@@ -132,7 +144,7 @@ describe('1962 Tridentine Calendar - GeneralRoman1962', () => {
     });
 
     test('Immaculate Conception (Dec 8)', () => {
-      const feast = definitions['immaculate_conception_of_the_blessed_virgin_mary'];
+      const feast = getEntry('immaculate_conception_of_the_blessed_virgin_mary');
       expect(feast).toBeDefined();
       expect(feast.rank).toBe(Ranks.FirstClass);
       expect(feast.colors).toBe(Colors.White);
@@ -143,7 +155,7 @@ describe('1962 Tridentine Calendar - GeneralRoman1962', () => {
 
   describe('Major Solemnities - II Class', () => {
     test('Purification / Presentation (Feb 2)', () => {
-      const feast = definitions['presentation_of_the_lord'];
+      const feast = getEntry('presentation_of_the_lord');
       expect(feast).toBeDefined();
       expect(feast.rank).toBe(Ranks.SecondClass);
       expect(feast.colors).toBe(Colors.White);
@@ -169,7 +181,7 @@ describe('1962 Tridentine Calendar - GeneralRoman1962', () => {
       ];
 
       majorFeasts.forEach((feastKey) => {
-        const feast = definitions[feastKey];
+        const feast = getEntry(feastKey);
         expect(feast).toBeDefined();
         expect(feast.rank).toBeDefined();
       });
@@ -191,7 +203,7 @@ describe('1962 Tridentine Calendar - GeneralRoman1962', () => {
       ];
 
       majorFeasts.forEach((feastKey) => {
-        const feast = definitions[feastKey];
+        const feast = getEntry(feastKey);
         expect(feast).toBeDefined();
         expect(feast.precedence).toBeDefined();
       });
@@ -213,7 +225,7 @@ describe('1962 Tridentine Calendar - GeneralRoman1962', () => {
       ];
 
       majorFeasts.forEach((feastKey) => {
-        const feast = definitions[feastKey];
+        const feast = getEntry(feastKey);
         expect(feast).toBeDefined();
         expect(feast.colors).toBeDefined();
       });
@@ -235,7 +247,7 @@ describe('1962 Tridentine Calendar - GeneralRoman1962', () => {
       ];
 
       majorFeasts.forEach((feastKey) => {
-        const feast = definitions[feastKey];
+        const feast = getEntry(feastKey);
         expect(feast).toBeDefined();
         expect(feast.commonsDef).toBe(Common.None);
       });
@@ -252,20 +264,20 @@ describe('1962 Tridentine Calendar - GeneralRoman1962', () => {
       ];
 
       marianFeasts.forEach((feastKey) => {
-        const feast = definitions[feastKey];
+        const feast = getEntry(feastKey);
         expect(feast).toBeDefined();
         expect(feast.colors).toBe(Colors.White);
       });
     });
 
     test('Peter and Paul uses red (martyrs)', () => {
-      const feast = definitions['peter_and_paul_apostles'];
+      const feast = getEntry('peter_and_paul_apostles');
       expect(feast).toBeDefined();
       expect(feast.colors).toBe(Colors.Red);
     });
 
     test('All Souls allows purple or black', () => {
-      const feast = definitions['all_souls'];
+      const feast = getEntry('all_souls');
       expect(feast).toBeDefined();
       expect(feast.colors).toContain(Colors.Purple);
       expect(feast.colors).toContain(Colors.Black);
